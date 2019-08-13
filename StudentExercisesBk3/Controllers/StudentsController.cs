@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using StudentExercises.Models.ViewModels;
 using StudentExercisesBk3.Models;
 
 namespace StudentExercisesBk3.Controllers
@@ -99,17 +100,20 @@ namespace StudentExercisesBk3.Controllers
         // GET: Students/Create
         public ActionResult Create()
         {
-            return View();
+            var ViewModel = new StudentCreateViewModel
+                (_config.GetConnectionString("DefaultConnection"));
+            return View(ViewModel);
         }
 
         // POST: Students/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Student student)
         {
             try
             {
-                // TODO: Add insert logic here
+                
+
 
                 return RedirectToAction(nameof(Index));
             }

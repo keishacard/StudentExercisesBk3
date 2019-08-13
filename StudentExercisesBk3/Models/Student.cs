@@ -8,19 +8,26 @@ namespace StudentExercisesBk3.Models
 {
     public class Student
     {
-        [Required]
+        //[Required]
+        //Get rid of required so that this value can be null
         [Display(Name = "Student Id")]
-        public int Id { get; set; }
+        //? after int or datetime makes it so it can be null
+        //otherwise your student id will be 0, which you don't want
+        public int? Id { get; set; }
 
         [Required]
+        //MaxLengthAttribute, etc are atributes and have to do with your validation in browser
+        [MaxLength(20)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [MaxLength(20)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
+        [MinLength(2)]
         [Display(Name = "Slack Handle")]
         public string SlackHandle { get; set; }
 
