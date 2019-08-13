@@ -143,7 +143,7 @@ namespace StudentExercisesBk3.Controllers
                     }
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
