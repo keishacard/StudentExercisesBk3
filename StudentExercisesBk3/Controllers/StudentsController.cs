@@ -105,6 +105,7 @@ namespace StudentExercisesBk3.Controllers
             return View(ViewModel);
         }
 
+        //Post is the method that fires when the form is submitted
         // POST: Students/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -113,9 +114,36 @@ namespace StudentExercisesBk3.Controllers
             try
             {
                 
+                //now, write it to the DB
+                using (SqlConnection conn = Connection)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"
+                       INSERT INTO Student (
+                          FirstName,
+                          LastName,
+                          SlackHandle,
+                          CohortId
+                      ) VALUES (
+                           @firstName,
+                           @lastName,
+                           @slackHandle,
+                           @cohortId
+                       )
+                      ";
+                        cmd.Parameters.AddWithValue("@firstName", student.FirstName);
+                        cmd.Parameters.AddWithValue("@lastName", student.LastName);
+                        cmd.Parameters.AddWithValue("@slackHandle", student.SlackHandle);
+                        cmd.Parameters.AddWithValue("@cohortId", student.CohortId);
 
+                        //now, Execute command
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             catch
             {
